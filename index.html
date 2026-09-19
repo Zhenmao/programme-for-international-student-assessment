@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Programme for International Student Assessment (PISA)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,900;1,900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main>
+      <h1
+        >Students performance in science, reading, mathematics and computational
+        problem-solving</h1
+      >
+      <p>
+        The Programme for International Student Assessment (PISA) is created by
+        the Organisation for Economic Co-operation and Development (OECD) to
+        assess what 15-year-old students know and can do in science, reading and
+        mathematics. PISA 2025 also includes an innovative assessment of
+        computational problem solving, which examines how students use
+        computational tools and practices to solve problems, test solutions and
+        build digital artifacts.
+      </p>
+      <p>
+        PISA scores do not have a substantive meaning. They are scaled to to fit
+        approximately normal distributions for all OECD countries with a mean of
+        500 and standard deviation of 100 in the first year a subject was
+        assessed (reading in 2000, mathematics in 2003, science in 2006,
+        computational problem solving 2025).
+      </p>
+
+      <div class="figure">
+        <div class="legends">
+          <div class="legend">
+            <div class="legend__title">Subject</div>
+            <div id="subjectLegend" class="legend__body"></div>
+          </div>
+          <div class="legend">
+            <div class="legend__title">Compared with OECD average</div>
+            <div id="comparisonLegend" class="legend__body"></div>
+          </div>
+        </div>
+        <div id="chart"></div>
+      </div>
+
+      <p class="footer">
+        * Caution is required when interpreting estimates because one or more
+        PISA sampling standards were not met.
+      </p>
+      <p class="footer">
+        Countries and economies are ranked in descending order of the mean
+        performance in science in PISA 2025.
+      </p>
+      <p class="footer">
+        Source:
+        <a
+          href="https://www.oecd.org/en/publications/pisa-2025-results-volume-i_73451bc5-en/full-report/executive-summary_3701b0ef.html#title-404974cf81"
+          target="_blank"
+          >OECD, PISA 2025 Database, Table I.1</a
+        >
+      </p>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

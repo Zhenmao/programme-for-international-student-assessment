@@ -1,0 +1,216 @@
+/* Reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  color: currentColor;
+}
+
+/* Typography */
+:root {
+  --font-size-sm: clamp(0.8rem, 0.25vi + 0.74rem, 0.94rem);
+  --font-size-base: clamp(1rem, 0.45vi + 0.89rem, 1.25rem);
+  --font-size-md: clamp(1.25rem, 0.76vi + 1.06rem, 1.67rem);
+  --font-size-lg: clamp(1.56rem, 1.2vi + 1.26rem, 2.22rem);
+  --font-size-xl: clamp(1.95rem, 1.83vi + 1.5rem, 2.96rem);
+  --font-size-xxl: clamp(2.44rem, 2.74vi + 1.76rem, 3.95rem);
+  --font-size-xxxl: clamp(3.05rem, 4.02vi + 2.05rem, 5.26rem);
+
+  --font-size-vis-xs: 10px;
+  --font-size-vis-sm: 12px;
+  --font-size-vis-base: 14px;
+
+  --font-family-body: "Noto Sans", sans-serif;
+  --font-family-header: "Noto Sans Display", sans-serif;
+
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  --line-height-body: 1.5;
+  --line-height-header: 1.1;
+
+  --color-background: #fff;
+  --color-text: #2f2f2f;
+  --color-text-invert: #fff;
+
+  --color-science: #ca7155;
+  --color-reading: #d7a949;
+  --color-mathematics: #7d8497;
+  --color-computational-problem-solving: #6c8c89;
+
+  --color-secondary: #868686;
+}
+
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+h1 {
+  font-family: var(--font-family-header);
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-header);
+  text-wrap: balance;
+}
+
+.footer {
+  font-size: var(--font-size-sm);
+}
+
+p {
+  max-width: 70ch;
+}
+
+.figure {
+  font-size: var(--font-size-vis-base);
+}
+
+/* Layout */
+main {
+  margin: 4rem auto;
+  width: min(65rem, 100% - 2rem);
+}
+
+main > * + *,
+.figure > * + * {
+  margin-block-start: var(--spacer, 1lh);
+}
+
+h1 + * {
+  --spacer: 2lh;
+}
+
+.figure {
+  margin-block: 2lh;
+}
+
+.legends {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1lh 4lh;
+}
+
+/* Legend */
+.legend__title {
+  font-weight: var(--font-weight-bold);
+}
+
+.legend__body {
+  margin-block-start: 0.5em;
+  display: grid;
+  gap: 0.25em;
+}
+
+.swatch {
+  --dot-size: 16px;
+  --comparison-dot-size: 6px;
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.swatch__swatch {
+  flex-shrink: 0;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: calc(infinity * 1px);
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.subject-legend .swatch__swatch {
+  background-color: var(--color-subject);
+  color: var(--color-text-invert);
+  font-size: var(--font-size-vis-xs);
+  font-weight: var(--font-weight-black);
+  line-height: 1;
+}
+
+.comparison-legend .swatch__swatch {
+  border: 1px dashed var(--color-secondary);
+}
+
+.comparison-legend [data-type="above"] .swatch__swatch::after,
+.comparison-legend [data-type="below"] .swatch__swatch::after {
+  content: "";
+  display: block;
+  width: var(--comparison-dot-size);
+  height: var(--comparison-dot-size);
+  border-radius: calc(infinity * 1px);
+  position: absolute;
+  background-color: var(--color-secondary);
+  transform: translateY(
+    calc(-1 * var(--dot-size) / 2 - 1 * var(--comparison-dot-size) / 2 - 2px)
+  );
+}
+
+.comparison-legend [data-type="below"] .swatch__swatch::after {
+  transform: translateY(
+    calc(var(--dot-size) / 2 + var(--comparison-dot-size) / 2 + 2px)
+  );
+}
+
+/* Dumbbell plot */
+.dumbbell-plot {
+  position: relative;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-background);
+  padding-block-start: 8px;
+}
+
+.axis__title {
+  font-weight: var(--font-weight-bold);
+}
+
+.tick {
+  color: var(--color-secondary);
+  font-size: var(--font-size-vis-sm);
+}
+
+.row__line {
+  stroke: var(--color-secondary);
+}
+
+.row__dot {
+  font-size: var(--font-size-vis-xs);
+  font-weight: var(--font-weight-black);
+}
