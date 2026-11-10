@@ -1,6 +1,6 @@
 import { KEY_ACCESSOR, SUBJECTS } from "./constants.js";
 
-export default function dumbbellPlot({ el, data }) {
+export default function dumbbellPlot({ el, elTooltip, elTooltipAnchor, data }) {
   let width;
 
   const dotRadius = 8;
@@ -101,15 +101,39 @@ export default function dumbbellPlot({ el, data }) {
           .attr("class", "row")
           .call((g) =>
             g
+              .append("rect")
+              .attr("class", "row__track")
+              .attr("y", -dotRadius)
+              .attr("height", dotRadius * 2)
+              .attr("rx", dotRadius),
+          )
+          .call((g) =>
+            g
               .append("text")
               .attr("class", "row__label")
               .attr("dy", "0.32em")
               .text(KEY_ACCESSOR),
           )
           .call((g) => g.append("line").attr("class", "row__line"))
-          .call((g) => g.append("g").attr("class", "row__dots")),
+          .call((g) => g.append("g").attr("class", "row__dots"))
+          .on("mouseenter", entered)
+          .on("mouseleave", left),
       )
       .attr("transform", (d) => `translate(0,${y(KEY_ACCESSOR(d))})`);
+
+    rowG
+      .select(".row__track")
+      .attr(
+        "x",
+        (d) => x(d3.min(SUBJECTS, (s) => s.valueAccessor(d))) - dotRadius,
+      )
+      .attr(
+        "width",
+        (d) =>
+          x(d3.max(SUBJECTS, (s) => s.valueAccessor(d))) -
+          x(d3.min(SUBJECTS, (s) => s.valueAccessor(d))) +
+          dotRadius * 2,
+      );
 
     rowG
       .select(".row__label")
@@ -173,5 +197,33 @@ export default function dumbbellPlot({ el, data }) {
         const d = d3.select(this.parentNode).datum();
         return `translate(${x(s.valueAccessor(d))},0)`;
       });
+  }
+
+  function entered(event, d) {
+    d3.select(this).classed("is-active", true);
+
+    elTooltip.dispatchEvent(
+      new CustomEvent("tooltipdatachanged", {
+        detail: d,
+        bubbles: true,
+      }),
+    );
+    positionTooltipAnchor(this);
+    elTooltip.showPopover();
+  }
+
+  function positionTooltipAnchor(g) {
+    const rect = g.getBoundingClientRect();
+    const containerRect = el.getBoundingClientRect();
+
+    d3.select(elTooltipAnchor)
+      .style("left", `${rect.left - containerRect.left + rect.width / 2}px`)
+      .style("top", `${rect.top - containerRect.top + rect.height / 2}px`);
+  }
+
+  function left() {
+    d3.select(this).classed("is-active", false);
+
+    elTooltip.hidePopover();
   }
 }

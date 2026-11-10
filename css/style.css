@@ -47,6 +47,7 @@ a {
   --font-size-vis-xs: 10px;
   --font-size-vis-sm: 12px;
   --font-size-vis-base: 14px;
+  --font-size-vis-lg: 16px;
 
   --font-family-body: "Noto Sans", sans-serif;
   --font-family-header: "Noto Sans Display", sans-serif;
@@ -188,29 +189,131 @@ h1 + * {
 /* Dumbbell plot */
 .dumbbell-plot {
   position: relative;
+
+  .sticky-top {
+    position: sticky;
+    top: 0;
+    background-color: var(--color-background);
+    padding-block-start: 8px;
+  }
+
+  .axis__title {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .tick {
+    color: var(--color-secondary);
+    font-size: var(--font-size-vis-sm);
+  }
+
+  .row__track {
+    stroke-width: 4px;
+    stroke: var(--color-secondary);
+    fill: var(--color-secondary);
+    opacity: 0;
+  }
+
+  .is-active .row__track {
+    opacity: 0.2;
+  }
+
+  .row__line {
+    stroke: var(--color-secondary);
+  }
+
+  .row__dot {
+    font-size: var(--font-size-vis-xs);
+    font-weight: var(--font-weight-black);
+  }
 }
 
-.sticky-top {
-  position: sticky;
-  top: 0;
+/* Dot plot */
+.dot-plot {
+  svg {
+    overflow: visible;
+  }
+
+  .title {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .track {
+    fill: var(--color-secondary);
+    fill-opacity: 0.2;
+  }
+
+  .dot {
+    fill-opacity: 0.2;
+  }
+
+  .avg__line {
+    stroke: var(--color-secondary);
+  }
+
+  .avg__label {
+    font-size: var(--font-size-vis-xs);
+  }
+
+  .active-dot {
+    font-size: var(--font-size-vis-xs);
+    font-weight: var(--font-weight-black);
+  }
+
+  .active-dot__value {
+    font-size: var(--font-size-vis-base);
+    font-weight: var(--font-weight-bold);
+  }
+}
+
+/* Tooltip */
+.tooltip-bounds {
+  position: relative;
+}
+
+.tooltip-anchor {
+  anchor-name: --tooltip-anchor;
+  position: absolute;
+  pointer-events: none;
+}
+
+.tooltip {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  position-anchor: --tooltip-anchor;
+  position-area: block-start;
+  margin-block-end: 16px;
+  position-try-fallbacks: block-end;
+
+  width: min(25rem, 100% - 2rem);
+  pointer-events: none;
+  font-size: var(--font-size-vis-base);
+  padding: 0.5em 1em;
   background-color: var(--color-background);
-  padding-block-start: 8px;
+  border-radius: 0.5em;
+  border: 1px solid var(--color-secondary);
+  box-shadow: 0 4px 18px -2px
+    color-mix(in srgb, var(--color-secondary) 20%, transparent);
+
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    display 0.2s ease allow-discrete,
+    overlay 0.2s ease allow-discrete;
+
+  &:popover-open {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  display: grid;
+  gap: 0.5em;
 }
 
-.axis__title {
+.tooltip__title {
   font-weight: var(--font-weight-bold);
-}
-
-.tick {
-  color: var(--color-secondary);
-  font-size: var(--font-size-vis-sm);
-}
-
-.row__line {
-  stroke: var(--color-secondary);
-}
-
-.row__dot {
-  font-size: var(--font-size-vis-xs);
-  font-weight: var(--font-weight-black);
+  font-size: var(--font-size-vis-lg);
 }
